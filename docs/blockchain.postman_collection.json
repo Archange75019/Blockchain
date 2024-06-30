@@ -1,0 +1,80 @@
+{
+	"info": {
+		"_postman_id": "124c663b-ee06-4886-be21-c2bf14a17950",
+		"name": "blockchain",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4184948"
+	},
+	"item": [
+		{
+			"name": "Créer une nouvelle transaction",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"sender\": \"Alice\",\n    \"recipient\": \"Bob\",\n    \"amount\": 10.5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/transactions/new",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transactions",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Miner un nouveau bloc",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/mine",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"mine"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtenir la chaîne complète de blocs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/chain",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"chain"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
