@@ -1,9 +1,7 @@
 package com.blockchain.blockchain.repository;
 
 import com.blockchain.blockchain.model.Transaction;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.CrudRepository;
 
-@Repository
-public interface TransactionRepository extends JpaRepository<Transaction, Long> {
+public interface TransactionRepository extends CrudRepository<Transaction, Long> {
 }

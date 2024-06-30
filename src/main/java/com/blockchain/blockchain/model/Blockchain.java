@@ -24,11 +24,11 @@ public class Blockchain {
     }
 
     public Block createNewBlock(int proof, String previousHash) {
-        Block block = new Block (
+        Block block = new Block(
                 chain.size() + 1,
                 previousHash,
-                System.currentTimeMillis(),
-                currentTransactions,
+                System.currentTimeMillis(), // Assurez-vous que le type est long
+                new ArrayList<>(currentTransactions),
                 proof
         );
         currentTransactions.clear();

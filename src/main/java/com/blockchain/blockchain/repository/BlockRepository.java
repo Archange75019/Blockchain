@@ -1,8 +1,7 @@
 package com.blockchain.blockchain.repository;
-import com.blockchain.blockchain.model.Block;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface BlockRepository extends JpaRepository<Block, Long> {
+import com.blockchain.blockchain.model.Block;
+import org.springframework.data.repository.CrudRepository;
+
+public interface BlockRepository extends CrudRepository<Block, Long> {
 }

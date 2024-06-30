@@ -1,4 +1,5 @@
 package com.blockchain.blockchain.model;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,7 +15,11 @@ public class Transaction {
     private String recipient;
     private double amount;
 
-    // Constructeur
+    // Constructeurs
+    public Transaction() {
+        // Constructeur par défaut requis par JPA
+    }
+
     public Transaction(String sender, String recipient, double amount) {
         this.sender = sender;
         this.recipient = recipient;
