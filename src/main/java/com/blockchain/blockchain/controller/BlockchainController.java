@@ -14,35 +14,39 @@ import java.util.Map;
 @RequestMapping("/api")
 public class BlockchainController {
 
-    private Blockchain blockchain;
+    private final Blockchain blockchain;
 
     @Autowired
-    public BlockchainController() {
-        this.blockchain = new Blockchain();
+    public BlockchainController(Blockchain blockchain) {
+        this.blockchain = blockchain;
     }
 
     @PostMapping("/transactions/new")
-    public ResponseEntity<String> newTransaction(@RequestBody Transaction transaction) {
+    public ResponseEntity<?> createTransaction(@RequestBody Transaction transaction) {
         int index = blockchain.createNewTransaction(transaction.getSender(), transaction.getRecipient(), transaction.getAmount());
-        return ResponseEntity.ok("Transaction will be added to Block " + index);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Transaction will be added to Block " + index);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/mine")
-    public ResponseEntity<Block> mine() {
+    public ResponseEntity<?> mine() {
         Block lastBlock = blockchain.getLastBlock();
         int lastProof = lastBlock.getProof();
         int proof = blockchain.proofOfWork(lastProof);
-
-        blockchain.createNewTransaction("0", "node-identifier", 1);
-
-        String previousHash = Blockchain.hash(lastBlock);
-        Block block = blockchain.createNewBlock(proof, previousHash);
-
-        return ResponseEntity.ok(block);
+        blockchain.createNewTransaction("0", "your-address", 1);
+        Block block = blockchain.createNewBlock(proof, Blockchain.hash(lastBlock));
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "New Block Forged");
+        response.put("index", block.getIndex());
+        response.put("transactions", block.getTransactions());
+        response.put("proof", block.getProof());
+        response.put("previousHash", block.getPreviousHash());
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/chain")
-    public ResponseEntity<Map<String, Object>> fullChain() {
+    public ResponseEntity<?> getChain() {
         Map<String, Object> response = new HashMap<>();
         response.put("chain", blockchain.getChain());
         response.put("length", blockchain.getChain().size());

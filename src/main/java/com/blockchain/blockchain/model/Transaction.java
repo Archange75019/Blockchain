@@ -1,14 +1,25 @@
 package com.blockchain.blockchain.model;
-
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Entity
 public class Transaction {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String sender;
     private String recipient;
     private double amount;
+
+    // Constructeur
+    public Transaction(String sender, String recipient, double amount) {
+        this.sender = sender;
+        this.recipient = recipient;
+        this.amount = amount;
+    }
+
+    // Getters et setters
 }

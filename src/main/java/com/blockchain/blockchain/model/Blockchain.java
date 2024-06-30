@@ -1,6 +1,7 @@
 package com.blockchain.blockchain.model;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -9,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class Blockchain {
 
     private List<Block> chain;
@@ -22,12 +24,12 @@ public class Blockchain {
     }
 
     public Block createNewBlock(int proof, String previousHash) {
-        Block block = new Block(
+        Block block = new Block (
                 chain.size() + 1,
+                previousHash,
                 System.currentTimeMillis(),
-                new ArrayList<>(currentTransactions),
-                proof,
-                previousHash
+                currentTransactions,
+                proof
         );
         currentTransactions.clear();
         chain.add(block);
