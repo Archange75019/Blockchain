@@ -22,7 +22,7 @@ Cette application est une implémentation simple d'une blockchain utilisant Spri
    git clone https://github.com/Archange75019/blockchain-springboot.git
    cd blockchain-springboot
 
-2. **Lancement de l'Application**
+## Lancement de l'Application
 Pour démarrer l'application, utilisez la commande suivante :
 
 ```bash
