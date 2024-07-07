@@ -12,30 +12,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class Blockchaine {
+public class BlockchainService {
+    private List<Block> chain;
+
     private final BlockRepository blockRepository;
     private final TransactionRepository transactionRepository;
 
     private List<Transaction> currentTransactions;
 
     @Autowired
-    public Blockchaine(BlockRepository blockRepository, TransactionRepository transactionRepository) {
+    public BlockchainService(BlockRepository blockRepository, TransactionRepository transactionRepository) {
         this.blockRepository = blockRepository;
         this.transactionRepository = transactionRepository;
         this.currentTransactions = new ArrayList<>();
-        // Créer le bloc génésis
+        this.chain = new ArrayList<>();
+        // Create the genesis block
         createNewBlock(100, "1");
     }
 
     public Block createNewBlock(int proof, String previousHash) {
         Block block = new Block(
-                (int) (blockRepository.count() + 1),
+                chain.size() + 1,
+                previousHash,
                 System.currentTimeMillis(),
                 new ArrayList<>(currentTransactions),
-                proof,
-                previousHash
+                proof
         );
         currentTransactions.clear();
+        chain.add(block);
         blockRepository.save(block);
         return block;
     }
@@ -48,12 +52,11 @@ public class Blockchaine {
     }
 
     public Block getLastBlock() {
-        List<Block> blocks = (List<Block>) blockRepository.findAll();
-        return blocks.get(blocks.size() - 1);
+        return chain.get(chain.size() - 1);
     }
 
     public List<Block> getChain() {
-        return (List<Block>) blockRepository.findAll();
+        return chain;
     }
 
     public int proofOfWork(int lastProof) {
@@ -68,6 +71,17 @@ public class Blockchaine {
         String guess = lastProof + "" + proof;
         String guessHash = DigestUtils.sha256Hex(guess);
         return guessHash.startsWith("0000");
+    }
+
+    public Block mineBlock(String minerAddress) {
+        int lastProof = getLastBlock().getProof();
+        int proof = proofOfWork(lastProof);
+
+        createNewTransaction("0", minerAddress, 1);
+
+        Block lastBlock = getLastBlock();
+        Block newBlock = createNewBlock(proof, hash(lastBlock));
+        return newBlock;
     }
 
     public static String hash(Block block) {
