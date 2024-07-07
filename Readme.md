@@ -44,9 +44,9 @@ Body :
 }
 ```
 ### Miner un bloc :
-Voir la blockchain
+
 URL : http://localhost:8080/api/mine?minerAddress=miner1
 Méthode : POST
-
+### Voir la bloc chain:
 URL : http://localhost:8080/api/chain
 Méthode : GET
